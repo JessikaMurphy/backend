@@ -1,8 +1,8 @@
 package hello.whatever;
 
-import hello.whatever.beans.Student;
 import hello.whatever.beans.Paint;
-import hello.whatever.beans.PaintService;
+import hello.whatever.beans.Student;
+
 
 import java.util.HashMap;
 

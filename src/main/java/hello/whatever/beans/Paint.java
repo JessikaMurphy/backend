@@ -1,6 +1,6 @@
 package hello.whatever.beans;
 
-import java.util.Date;
+
 
 public class Paint {
 
