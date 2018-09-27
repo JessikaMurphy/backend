@@ -1,12 +1,15 @@
 package hello.whatever.beans;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class PaintService {
+	
+	
 	
 	public List<Paint> getAll() {
 		List<Paint> hmPaint = new ArrayList<Paint>();
@@ -30,48 +33,37 @@ public class PaintService {
 		return hmPaint;
 	}
 	public List<Paint> search(String searchTerm){
+		
+		List<Paint> thePaints = getAll();
+		
 		List<Paint> hmPaint = new ArrayList<Paint>();
-		long itemCount = 0;
-		for (int i = 0; i < PAINTIDS.length; i++) {
+		
+		
+		
+		for (int i = 0; i < thePaints.size(); i++) {
 			if(Character.isDigit(searchTerm.charAt(0))) {
-				if (PAINTIDS[i] != null && (PAINTIDS[i] != PAINTIDS[i - 1]) && (!PAINTIDS[i].isEmpty())) {
-					if(PAINTIDS[i].contains(searchTerm)) {
-						String thergb = "";
-						if (PAINTRGBS[i] != null) {
-							thergb = "#" + PAINTRGBS[i].trim();
-						}
-						String theName = "";
-						if (PAINTNAMES[i] != null) {
-							theName = PAINTNAMES[i].trim();
-						}
-						Paint indexPaint = new Paint(theName, thergb, PAINTIDS[i], "Mr Color");
-						indexPaint.setId(itemCount);
-						hmPaint.add(indexPaint);
-						itemCount++;
-					}
+				if(thePaints.get(i).getPaintId().contains(searchTerm)) {
+						addToPaintList(thePaints.get(i), thePaints, i, hmPaint);
 				}
 			}
-				
-			else if(PAINTNAMES[i] != null && (PAINTNAMES[i] != PAINTNAMES[i - 1]) && (!PAINTNAMES[i].isEmpty())) {
-				if(PAINTNAMES[i].toLowerCase().contains(searchTerm.toLowerCase())) {
-					String thergb = "";
-					if (PAINTRGBS[i] != null) {
-						thergb = "#" + PAINTRGBS[i].trim();
-					}
-					String theName = "";
-					if (PAINTNAMES[i] != null) {
-						theName = PAINTNAMES[i].trim();
-					}
-					Paint indexPaint = new Paint(theName, thergb, PAINTIDS[i], "Mr Color");
-					indexPaint.setId(itemCount);
-					hmPaint.add(indexPaint);
-					itemCount++;
+			else {
+				if(thePaints.get(i).getPaintName().toLowerCase().contains(searchTerm.toLowerCase())) {
+					addToPaintList(thePaints.get(i), thePaints, i, hmPaint);
 				}
 			}
 		}
 		return hmPaint;
 	}
-	
+	private void addToPaintList(Paint paint, List<Paint> thePaints, int i, List<Paint> hmPaint) {
+		String theName = thePaints.get(i).getPaintName();
+		String thergb = thePaints.get(i).getRgb();
+		String thePaintId = thePaints.get(i).getPaintId();
+		String theBrand = thePaints.get(i).getBrand();
+		
+		Paint indexPaint = new Paint(theName, thergb, thePaintId, theBrand);
+		indexPaint.setId(thePaints.get(i).getId());
+		hmPaint.add(indexPaint);
+	}
 	
 	private String[] PAINTIDS = { null, null, "100", "100", "44", "44", null, null, null, null, null, null, "327", "3",
 			"3", "63", "63", null, "85", null, null, null, null, "329", null, null, null, "4", null, null, null, null,

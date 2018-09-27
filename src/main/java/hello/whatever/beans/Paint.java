@@ -62,7 +62,7 @@ public class Paint {
  
     @Override
     public String toString() {
-        return "Paint{" +
+        return "{" +
                 "id=" + id +
                 ", brand='" + brand + '\'' +
                 ", name='" + paintName + '\'' +
